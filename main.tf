@@ -20,3 +20,16 @@ provider "aws" {
   region  = "us-east-2"
   profile = "terraform-ak"
 }
+
+resource "random_pet" "this" { # Produces random name
+  length = 4
+}
+
+module "bucket" {
+  source = "./s3_module"
+  name   = random_pet.this.id
+}
+
+module "instance_ec2" {
+  source = "./ec2_module"
+}
