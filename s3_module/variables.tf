@@ -12,11 +12,28 @@ variable "acl" {
 variable "policy" {
   type        = string
   default     = null
-  description = "description"
+  description = ""
 }
 
 variable "tags" {
   type        = map(string)
   description = ""
   default     = {}
+}
+
+variable "key_prefix" {
+  type    = string
+  default = ""
+}
+
+variable "files" {
+  type    = string
+  default = ""
+}
+
+
+variable "website" {
+  type        = map(string)
+  default     = {}
+  description = "map for website"
 }

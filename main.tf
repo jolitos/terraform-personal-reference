@@ -25,6 +25,10 @@ resource "random_pet" "this" { # Produces random name
   length = 4
 }
 
+resource "random_pet" "website" { # Produces random name for website
+  length = 4
+}
+
 module "bucket" {
   source = "./s3_module"
   name   = random_pet.this.id
@@ -32,4 +36,31 @@ module "bucket" {
 
 module "instance_ec2" {
   source = "./ec2_module"
+}
+
+module "website" {
+  source = "./s3_module"
+  name   = random_pet.website.id
+  website = {
+    index_document = "index.html"
+    error_document = "error.html"
+  }
+  policy = <<EOT
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${random_pet.website.id}/*"
+            ]
+        }
+    ]
+}
+EOT
 }
