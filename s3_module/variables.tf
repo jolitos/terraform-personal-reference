@@ -31,9 +31,14 @@ variable "files" {
   default = ""
 }
 
-
 variable "website" {
   type        = map(string)
   default     = {}
-  description = "map for website"
+  description = "dynamic map for website"
+}
+
+variable "versioning" {
+  type        = map(string)
+  default     = {}
+  description = "dynamic map for versioning"
 }

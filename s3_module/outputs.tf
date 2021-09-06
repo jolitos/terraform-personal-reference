@@ -25,3 +25,7 @@ output "website_domain" {
 output "hosted_zone_id" {
   value = aws_s3_bucket.this.hosted_zone_id
 }
+
+output "files" {
+  value = module.objects
+}

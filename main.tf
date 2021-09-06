@@ -32,6 +32,11 @@ resource "random_pet" "website" { # Produces random name for website
 module "bucket" {
   source = "./s3_module"
   name   = random_pet.this.id
+
+  versioning = {
+    enabled    = false
+    mfa_delete = false
+  }
 }
 
 module "instance_ec2" {
@@ -41,6 +46,8 @@ module "instance_ec2" {
 module "website" {
   source = "./s3_module"
   name   = random_pet.website.id
+  acl    = "public-read"
+  files  = "${path.root}/website"
   website = {
     index_document = "index.html"
     error_document = "error.html"
