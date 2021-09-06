@@ -14,7 +14,6 @@ resource "aws_s3_bucket" "this" {
     }
   }
 
-
   dynamic "versioning" {
     for_each = length(keys(var.versioning)) == 0 ? [] : [var.versioning]
     content {
