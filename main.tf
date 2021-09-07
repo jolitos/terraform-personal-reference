@@ -6,6 +6,7 @@ terraform {
     key     = "production/terraform.state"
     region  = "us-east-2" # South America / São Paulo Region
     profile = "terraform-ak"
+    dynamodb_table = "tflock-tfstate-979089802435" # TF State Locking
     encrypt = true
   }
   required_providers {
