@@ -2,12 +2,12 @@ terraform {
   required_version = ">= 1.0.5"
 
   backend "s3" {
-    bucket  = "tfstate-979089802435"
-    key     = "production/terraform.state"
-    region  = "us-east-2" # South America / São Paulo Region
-    profile = "terraform-ak"
+    bucket         = "tfstate-979089802435"
+    key            = "terraform.state"
+    region         = "us-east-2" # South America / São Paulo Region
+    profile        = "terraform-ak"
     dynamodb_table = "tflock-tfstate-979089802435" # TF State Locking
-    encrypt = true
+    encrypt        = true
   }
   required_providers {
     aws = {

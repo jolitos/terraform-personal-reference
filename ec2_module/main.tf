@@ -1,3 +1,7 @@
+locals {
+  env = terraform.workspace == "default" ? "dev" : terraform.workspace
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -15,12 +19,13 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "web" {
-  count = 1
+  count = lookup(var.instance, local.env)["number"]
 
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+  instance_type = lookup(var.instance, local.env)["type"]
 
   tags = {
-    Name = "Production"
+    Name = terraform.workspace == "dev" ? "Dev-${count.index}" : "Prod-${count.index}"
+    Env  = local.env
   }
 }
